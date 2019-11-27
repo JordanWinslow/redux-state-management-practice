@@ -1,12 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react"
+import ReactDOM from "react-dom"
+import { BrowserRouter as Router } from "react-router-dom"
+import { Provider } from "react-redux"
+import configureStore from "./redux/configureStore"
+import "./index.css"
+import "bootstrap/dist/css/bootstrap.min.css"
+import App from "./App"
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const REHYDRATE_STATE = {
+  totalCourses: 1,
+  courses: { 1: { title: "Demo Course" } } // this could come from local storage or backend.
+}
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+const store = configureStore(REHYDRATE_STATE)
+
+ReactDOM.render(
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>,
+  document.getElementById("root")
+)
